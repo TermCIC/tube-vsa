@@ -1,9 +1,11 @@
-# Tube VSR
+# Tube VSA
 
-Desktop software for the **ESP32 + BME690** VOC sensor. It runs the measurement, saves every reading to a local database, and helps compare treatments using an odor fingerprint from the metal-oxide gas sensor. It uses the same gas measurement as the Plant Stress Analyzer, without the spectral sensor.
+<img src="release/tube-vsa.png" alt="Tube VSA logo" width="120" align="right" />
+
+Desktop software for the **ESP32 + BME690** VOC sensor. It runs the measurement, saves every reading to a local database, and helps compare treatments using an odor fingerprint from the metal-oxide gas sensor. It uses the same gas measurement as [Leaf VSA](https://github.com/TermCIC/leaf-vsa) (formerly Plant Stress Analyzer), without the spectral sensor.
 
 > **Download:** get the latest installer from [Releases](../../releases/latest).
-> Use `TubeVSR_<version>_x64-setup.exe` (recommended) or the `.msi`. Windows 10/11, 64-bit.
+> Use `TubeVSA_<version>_x64-setup.exe` (recommended) or the `.msi`. Windows 10/11, 64-bit.
 
 ---
 
@@ -75,9 +77,13 @@ While the ESP32 is plugged in and idle, its heater keeps pulsing (**keep-warm**)
 ## Data
 
 - All readings are stored in a SQLite database at
-  `%LOCALAPPDATA%\CMU BME690 Research\Tube VSR\bme690_data.sqlite`.
-  The database is kept when the app is updated or reinstalled, and is separate from the Plant Stress Analyzer's.
+  `%LOCALAPPDATA%\CMU BME690 Research\Tube VSA\bme690_data.sqlite`.
+  The database is kept when the app is updated or reinstalled, and is separate from Leaf VSA's.
 - Experiments can be exported to CSV on the **Data Management** page. The default export has one row per sample measurement: its factor groups and the odor fingerprint log₁₀(R_blank / R_sample) at each heater temperature. A detailed export of all measurement features is also available.
+
+## Former name
+
+The very first build was published as **Tube VSR** (0.1.0), from a repository then called `tube-vsr`. Installing Tube VSA removes that installation and copies its data over on the first start. The repository was renamed to `tube-vsa`; GitHub forwards the old address.
 
 ## Version numbers
 
@@ -119,7 +125,8 @@ Keep the signing key safe: without it no further update can reach installed apps
 | `src/App.tsx`, `src/App.css` | React frontend (all pages). |
 | `src-tauri/src/lib.rs` | Rust backend: serial logging, SQLite, blank and cleaning checks, exports, firmware flashing. |
 | `src-tauri/tauri.conf.json` | App name, identifier, bundle and updater settings. |
+| `src-tauri/windows/hooks.nsh` | Installer hook that removes a former "Tube VSR" installation. |
 | `scripts/` | Firmware build and release scripts. |
 | `public/` | Logo and the optional setup photos (`blank-*.jpeg`, `sample-*.jpeg`) shown in the blank and sample dialogs. |
 
-Tube VSR is derived from the Plant Stress Analyzer and shares its measurement protocol (v17); the spectral (VNIR) parts are switched off (`HAS_VNIR = false` in `lib.rs`).
+Tube VSA is derived from [Leaf VSA](https://github.com/TermCIC/leaf-vsa) (formerly Plant Stress Analyzer) and shares its measurement protocol (v17); the spectral (VNIR) parts are switched off (`HAS_VNIR = false` in `lib.rs`).
